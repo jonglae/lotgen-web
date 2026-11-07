@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f4ed">
+  <meta name="description" content="한국 로또 6/45 번호를 만들고 당첨번호와 대조해 보세요.">
+  <title>LotGen 6/45 · 번호 생성기</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="LotGen 홈">
+        <span class="brand-mark" aria-hidden="true">L</span>
+        <span>LOTGEN <span class="brand-light">6/45</span></span>
+      </a>
+      <a class="official-link" href="https://www.dhlottery.co.kr/lt645/result" target="_blank" rel="noopener noreferrer">
+        동행복권 당첨결과 <span aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <section class="intro" id="top">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> KOREAN LOTTO 6/45</div>
+      <h1>오늘의 번호를<br><em>가볍게 골라보세요.</em></h1>
+      <p>1부터 45까지, 겹치지 않는 숫자 여섯 개를 뽑아 드립니다.</p>
+    </section>
+
+    <section class="generator panel" aria-labelledby="generator-title">
+      <div class="section-heading">
+        <div>
+          <span class="section-kicker">NUMBER GENERATOR</span>
+          <h2 id="generator-title">번호 만들기</h2>
+        </div>
+        <div class="set-control">
+          <label for="set-count">조합 수</label>
+          <select id="set-count" aria-label="생성할 조합 수">
+            <option value="1">1개</option><option value="2">2개</option>
+            <option value="3">3개</option><option value="4">4개</option>
+            <option value="5">5개</option><option value="6">6개</option>
+            <option value="7">7개</option><option value="8">8개</option>
+            <option value="9">9개</option><option value="10">10개</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="ticket-list" id="ticket-list" aria-live="polite" aria-label="생성한 번호 조합">
+        <div class="empty-state" id="empty-state">
+          <span class="empty-icon" aria-hidden="true">＋</span>
+          <span>아직 만든 번호가 없어요.</span>
+          <span class="empty-sub">아래 버튼을 눌러 첫 조합을 만들어 보세요.</span>
+        </div>
+      </div>
+
+      <div class="generator-actions">
+        <button class="button button-primary" id="generate-button" type="button">
+          <span class="button-icon" aria-hidden="true">✳</span> 번호 생성
+        </button>
+        <button class="button button-secondary" id="copy-button" type="button" disabled>번호 복사</button>
+        <button class="button button-quiet" id="share-button" type="button" disabled>공유</button>
+        <button class="button button-quiet reset-button" id="reset-button" type="button" disabled>리셋</button>
+      </div>
+      <p class="inline-status" id="copy-status" role="status"></p>
+    </section>
+
+    <section class="checker panel" aria-labelledby="checker-title">
+      <div class="section-heading checker-heading">
+        <div>
+          <span class="section-kicker">CHECK YOUR NUMBERS</span>
+          <h2 id="checker-title">당첨번호와 대조</h2>
+        </div>
+        <span class="checker-badge">직접 입력</span>
+      </div>
+      <p class="section-description">동행복권에서 확인한 당첨번호 6개와 보너스 번호를 입력하면 위 조합을 확인합니다.</p>
+
+      <form id="winning-form" novalidate>
+        <fieldset class="winning-fieldset">
+          <legend>당첨번호 6개</legend>
+          <div class="winning-inputs" id="winning-inputs">
+            <label class="sr-only" for="win-1">당첨번호 1</label><input id="win-1" class="number-input" type="number" min="1" max="45" inputmode="numeric" aria-label="당첨번호 1">
+            <label class="sr-only" for="win-2">당첨번호 2</label><input id="win-2" class="number-input" type="number" min="1" max="45" inputmode="numeric" aria-label="당첨번호 2">
+            <label class="sr-only" for="win-3">당첨번호 3</label><input id="win-3" class="number-input" type="number" min="1" max="45" inputmode="numeric" aria-label="당첨번호 3">
+            <label class="sr-only" for="win-4">당첨번호 4</label><input id="win-4" class="number-input" type="number" min="1" max="45" inputmode="numeric" aria-label="당첨번호 4">
+            <label class="sr-only" for="win-5">당첨번호 5</label><input id="win-5" class="number-input" type="number" min="1" max="45" inputmode="numeric" aria-label="당첨번호 5">
+            <label class="sr-only" for="win-6">당첨번호 6</label><input id="win-6" class="number-input" type="number" min="1" max="45" inputmode="numeric" aria-label="당첨번호 6">
+          </div>
+        </fieldset>
+        <div class="checker-bottom">
+          <label class="bonus-control" for="bonus-number">
+            <span>보너스 번호</span>
+            <input id="bonus-number" class="number-input bonus-input" type="number" min="1" max="45" inputmode="numeric" aria-label="보너스 번호">
+          </label>
+          <button class="button button-primary check-button" type="submit">당첨 확인</button>
+        </div>
+        <p class="form-error" id="form-error" role="alert"></p>
+      </form>
+
+      <div class="result-summary" id="result-summary" aria-live="polite" hidden></div>
+      <div class="rank-note" aria-label="등수 기준">
+        <span><b>1등</b> 6개 일치</span>
+        <span><b>2등</b> 5개 + 보너스</span>
+        <span><b>3등</b> 5개</span>
+        <span><b>4등</b> 4개</span>
+        <span><b>5등</b> 3개</span>
+      </div>
+      <a class="official-inline" href="https://www.dhlottery.co.kr/lt645/result" target="_blank" rel="noopener noreferrer">
+        동행복권 공식 당첨결과에서 번호 확인하기 <span aria-hidden="true">↗</span>
+      </a>
+    </section>
+
+    <footer class="footer">
+      <span>번호는 무작위로 생성되며 당첨을 예측하거나 보장하지 않습니다.</span>
+      <span>LOTGEN 6/45</span>
+    </footer>
+  </main>
+</body>
+</html>
